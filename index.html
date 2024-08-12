@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <meta name="apple-mobile-web-app-title" content="POS">
     <link rel="icon" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
-    <title>POS Device</title>
+    <title>Pay with Cryptocurrency</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,20 +18,11 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: #000;
         }
 
-        .container {
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        input[type="text"], input[type="number"] {
+        input[type="text"],
+        input[type="number"] {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
@@ -38,33 +30,46 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             box-sizing: border-box;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
             text-align: right;
         }
 
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.5em;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
+        .mb-1 {
+            margin-bottom: 1rem;
         }
 
         #error {
             display: none;
+            font-size: 21px;
+            color: #fff;
+        }
+
+        .maincontainer {
+            background-color: #000;
+            padding: 40px;
+        }
+
+        .headerfont {
+            color: #fff;
+            font-size: 30px;
+            line-height: 1.1em;
+            font-weight: 600;
+        }
+
+        .paybutton {
+            background-color: #F7931A;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 25px;
+            width: 100%;
+            padding: 15px 25px 15px 25px;
+            text-align: center;
+        }
+
+        .amountcontainer, .emailcontainer {
+            font-size: 21px;
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.5em;
         }
     </style>
     <script>
@@ -83,46 +88,54 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
-        function setMerchantCode(){
-        var code = getQueryParam('code');
+        function setMerchantCode() {
+            var code = getQueryParam('code');
             if (code) {
                 document.getElementById('merchantCode').value = code;
-            }else{
+            } else {
                 document.getElementById('error').style.display = 'block';
                 document.getElementById('main').style.display = 'none';
             }
         }
-        window.onload = function() {
+        window.onload = function () {
             setMerchantCode();
         }
     </script>
 </head>
+
 <body>
-    <div class="container" id="main">
-        <h1>Pay with Cryptocurrency</h1>
-        <label class="p-2" for="amount">Amount (Rands):</label>
-
-        <input type="number" id="amount" name="amount" value="" placeholder="0.00" required><br><br>
-
-        <label class="p-2" for="email">Reference (optional):</label>
-        <input type="text" id="reference" name="reference" placeholder="Inv-0001"><br><br>
-
-        <form id="donationForm" action="https://pay.cryptoqr.net/" method="GET" target="_BLANK">
-
-            <input type="hidden" id="merchantCode" name="merchantCode" value="">
-            <input type="hidden" id="amountCents" name="amountCents" value="000">
-            <input type="hidden" id="description" name="description" value="Donation to Daily Maverick">
-            <input type="hidden" id="orderId" name="orderId" value="">
-
-            <button type="submit" class="button" onclick="setAmountCents(); setOrderId(); return true">
-                Pay
-            </button>
-        </form>
-    </div>
     <div class="container" id="error">
         <h1>Oops!</h1>
-        <p>Something went wrong. Please try again.</p>
+        <p>Something went wrong. Please try again or contact support.</p>
+    </div>
+    <div class="maincontainer" id="main">
+        <center>
+            <div class="headerfont"> Pay with<br> Cryptocurrency</div>
+            <div class="iconscontainer mb-1">
+                <img src="./images/1.png" style="width: 40px;">
+                <img src="./images/2.png" style="width: 40px;">
+                <img src="./images/3.png" style="width: 40px;">
+                <img src="./images/4.png" style="width: 40px;">
+            </div>
+            <div class="mb-1">
+                <label class="amountcontainer" for="amount">Amount (Rands):</label>
+                <input type="number" id="amount" name="amount" onchange="setAmountCents()" placeholder="0" required>
+                <label class="amountcontainer" for="email">Reference (Optional):</label>
+                <input type="text" id="reference" name="reference" onchange="setOrderId()" placeholder="order ref">
+            </div>
+            <form id="payform" action="https://pay.cryptoqr.net/" method="GET" class="mb-1">
+                <input type="hidden" id="merchantCode" name="merchantCode" value="">
+                <input type="hidden" id="amountCents" name="amountCents" value="25000">
+                <input type="hidden" id="description" name="description" value="Donation to Daily Maverick">
+                <input type="hidden" id="orderId" name="orderId" value="">
+                <button type="submit" class="paybutton" onclick="setAmountCents(); setOrderId(); return true">
+                    Pay
+                </button>
+            </form>
+
+            <img src="./images/5.png" style="max-width: 220px;">
+        </center>
     </div>
 </body>
-</html>
 
+</html>
