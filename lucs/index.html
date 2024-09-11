@@ -28,21 +28,35 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: url('logo.jpg') no-repeat center center fixed;
+            background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+
+        /* Fade effect for background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Slight fade to darken the background */
+            z-index: -1;
         }
 
         .maincontainer {
             background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for the container */
             padding: 20px;
-            border-radius: 15px;
+            /* border-radius: 15px; */
             width: 90%;
             max-width: 400px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adds a slight shadow for better contrast */
+            z-index: 1; /* Ensures content stays above the background */
         }
 
         #shop-logo {
-            max-width: 160px;
+            /* max-width: 320px; */
+            width: 100%;
             margin-bottom: 20px;
             display: block;
             margin-left: auto;
@@ -75,7 +89,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             margin-bottom: 20px;
-            text-align: center;
+            text-align: right;
         }
 
         .paybutton {
@@ -131,7 +145,7 @@
     </div>
     <div class="maincontainer" id="main">
         <!-- Shop's Logo at the Top -->
-        <img src="logo.jpg" id="shop-logo" alt="Shop Logo">
+        <img src="logo2.jpg" id="shop-logo" alt="Shop Logo">
 
         <!-- Pay With Section -->
         <div class="headerfont">Pay With</div>
