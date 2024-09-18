@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokara Deli Crypto POS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="CryptoQR POS">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="../icon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+    <link rel="apple-touch-startup-image" href="../icon.png">
+    <meta name="theme-color" content="#000">
+    <meta name="description" content="Get Paid With Cryptocurrency">
+    <title>Get Paid With Crypto</title>
     <style>
-        body {
-            font-family: 'Josefin Sans', sans-serif;
-            background-image: url('https://www.tokara.com/wp-content/uploads/2022/07/delicatessen-1.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+        * {
             margin: 0;
-            color: #333;
-            position: relative;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Dark overlay for the background */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Fade effect for background */
         body::before {
             content: '';
             position: absolute;
@@ -28,123 +40,139 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Darkened overlay */
-            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5); /* Slight fade to darken the background */
+            z-index: -1;
         }
 
-        .pos-container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
+        .maincontainer {
+            background-color: rgba(16, 16, 16, 0.8); /* Semi-transparent background for the container */
             padding: 20px;
+            border-radius: 10px;
             width: 90%;
             max-width: 400px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adds a slight shadow for better contrast */
+            z-index: 1; /* Ensures content stays above the background */
         }
 
-        .pos-container img.logo {
-            width: 100px;
+        #shop-logo {
+            /* max-width: 320px; */
+            width: 100%;
             margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .crypto-icons {
+        .headerfont {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .iconscontainer {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .crypto-icons img {
+        .iconscontainer img {
             width: 50px;
-            height: auto;
         }
 
-        .pos-container h1 {
-            font-size: 1.8em; 
-            margin-bottom: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #333; /* Darker color for better visibility */
-        }
-
-        .pos-container h2 {
-            font-size: 1em; 
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #333; /* Darker color for better visibility */
-        }
-
-        .pos-container input[type="number"],
-        .pos-container input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 20px;
-            font-size: 1.2em;
-            border: 1px solid #ccc;
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5em;
             border-radius: 5px;
-            text-align: right; /* Right-aligned text */
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            text-align: right;
         }
 
-        .pos-container button {
-            background-color: #333;
+        .paybutton {
+            background-color: #F7931A;
             color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2em;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
+            font-size: 22px;
             width: 100%;
-            text-transform: uppercase;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
         }
 
-        .pos-container button:hover {
-            background-color: #555;
+        .brandimg {
+            max-width: 180px;
+            margin-top: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
+        #error {
+            display: none;
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+        }
     </style>
-</head>
-<body>
-    <div class="pos-container">
-        <img src="https://www.tokara.com/wp-content/uploads/2022/07/Tokara-Crest-Favicon.png" alt="Tokara Logo" class="logo">
-        <h1>Tokara Delicatessen</h1>
-        <h2>Accepting Crypto Payments Via</h2>
-        <div class="crypto-icons">
-            <img src="https://aurpay.net/wp-content/uploads/2022/12/icon_lightning.svg" alt="Bitcoin Lightning Logo">
-            <img src="https://play-lh.googleusercontent.com/T1_WHAGs5WZePQejNSqqrxZah4uhBvYr698nTCFhXMjMZo5oSCoko5yW2wtmeO1ClRU=s96-rw" alt="Binance Logo">
-            <img src="https://play-lh.googleusercontent.com/08UYofChP0vGLuee03UDybtn4iuhJErTeGW7f5zXoP4KcvFYzTQeGS8G_SkFDmSNow=s128-rw" alt="Luno Logo">
-            <img src="https://play-lh.googleusercontent.com/-ViZqUqaoloq7SD_w2S4FD4tjvg8-vFLsxtytCMGtmzQnTLk7PuRbmp3ZvUqmmGadQ=w480-h960-rw" alt="Valr Logo">
-        </div>
-        <form id="cryptoForm" action="https://pay.cryptoqr.net/" method="GET">
-            <input type="hidden" id="merchantCode" name="merchantCode" value="testMerchant">
-            <input type="hidden" id="amountCents" name="amountCents" value="">
-            <input type="hidden" id="orderId" name="orderId" value="">
-            <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01" onchange="setAmountCents()" required>
-            <input type="text" id="reference" placeholder="Payment reference (optional)" onchange="setOrderId()">
-            <button type="submit" onclick="setAmountCents(); setOrderId(); return true;">Request Crypto Payment</button>
-        </form>
-    </div>
-
     <script>
         function setOrderId() {
-            var reference = document.getElementById('reference').value;
             var timestamp = new Date().getTime();
-            var orderId = reference + '-' + timestamp;
+            var orderId = 'order-' + timestamp;
             document.getElementById('orderId').value = orderId;
         }
 
         function setAmountCents() {
             var amount = document.getElementById('amount').value;
-            var amountCents = Math.round(amount * 100); // Converts amount to cents
+            var amountCents = Math.round(amount * 100);
             document.getElementById('amountCents').value = amountCents;
         }
 
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+        window.onload = function() {
+            setOrderId();
+        };
     </script>
+</head>
+
+<body>
+    <div class="container" id="error">
+        <h1>Oops!</h1>
+        <p>Something went wrong. Please try again or contact support@moneybadger.co.za .</p>
+    </div>
+    <div class="maincontainer" id="main">
+        <!-- Shop's Logo at the Top -->
+        <img src="logo.png" id="shop-logo" alt="Shop Logo">
+
+        <!-- Pay With Section -->
+        <div class="headerfont">Pay With</div>
+
+        <!-- Prominent Wallet Icons -->
+        <div class="iconscontainer">
+            <img src="../images/icon_lightning.svg" alt="Lightning">
+            <img src="../images/binance.png" alt="Binance">
+            <img src="../images/luno.png" alt="Luno">
+            <img src="../images/valr.png" alt="Valr">
+        </div>
+
+        <!-- Amount Input Field -->
+        <input type="number" id="amount" name="amount" onchange="setAmountCents()" placeholder="Enter Rand Amount" required>
+
+        <!-- Payment Form -->
+        <form id="payform" action="https://pay.cryptoqr.net/" method="GET" class="mb-1">
+            <input type="hidden" id="merchantCode" name="merchantCode" value="tokara">
+            <input type="hidden" id="amountCents" name="amountCents" value="">
+            <input type="hidden" id="description" name="orderDescription" value="Tokara">
+            <input type="hidden" id="orderId" name="orderId" value="">
+            <button type="submit" class="paybutton" onclick="setAmountCents(); setOrderId(); return true">Request Crypto Payment</button>
+        </form>
+
+        <!-- Larger MoneyBadger Logo -->
+        <img src="../images/moneybadger.png" class="brandimg" alt="MoneyBadger">
+    </div>
 </body>
+
 </html>
