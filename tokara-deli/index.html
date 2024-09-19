@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="CryptoQR POS">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="../icon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+    <link rel="apple-touch-startup-image" href="../icon.png">
+    <meta name="theme-color" content="#000">
+    <meta name="description" content="Get Paid With Cryptocurrency">
+    <title>Get Paid With Crypto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Fade effect for background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Slight fade to darken the background */
+            z-index: -1;
+        }
+
+        .maincontainer {
+            background-color: rgba(16, 16, 16, 0.8); /* Semi-transparent background for the container */
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Adds a slight shadow for better contrast */
+            z-index: 1; /* Ensures content stays above the background */
+        }
+
+        #shop-logo {
+            margin-bottom: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .store-title-text {
+            color: #fff;
+            font-size: 32px; /* Match the size as per the reference */
+            font-weight: 400; /* Use normal weight */
+            letter-spacing: 2.5px; /* Spacing to match the reference */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .headerfont {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .iconscontainer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .iconscontainer img {
+            width: 50px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .paybutton {
+            background-color: #F7931A;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 22px;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .brandimg {
+            max-width: 180px;
+            margin-top: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #error {
+            display: none;
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function setOrderId() {
+            var timestamp = new Date().getTime();
+            var orderId = 'order-' + timestamp;
+            document.getElementById('orderId').value = orderId;
+        }
+
+        function setAmountCents() {
+            var amount = document.getElementById('amount').value;
+            var amountCents = Math.round(amount * 100);
+            document.getElementById('amountCents').value = amountCents;
+        }
+
+        window.onload = function() {
+            setOrderId();
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container" id="error">
+        <h1>Oops!</h1>
+        <p>Something went wrong. Please try again or contact support@moneybadger.co.za .</p>
+    </div>
+    <div class="maincontainer" id="main">
+        <!-- Shop's Logo at the Top -->
+        <img src="logo.png" id="shop-logo" alt="Shop Logo">
+        
+        <div class="store-title-text">THE DELICATESSEN</div>
+
+        <!-- Pay With Section -->
+        <div class="headerfont">Pay With</div>
+
+        <!-- Prominent Wallet Icons -->
+        <div class="iconscontainer">
+            <img src="../images/icon_lightning.svg" alt="Lightning">
+            <img src="../images/binance.png" alt="Binance">
+            <img src="../images/luno.png" alt="Luno">
+            <img src="../images/valr.png" alt="Valr">
+        </div>
+
+        <!-- Amount Input Field -->
+        <input type="number" id="amount" name="amount" onchange="setAmountCents()" placeholder="Enter Rand Amount" required>
+
+        <!-- Payment Form -->
+        <form id="payform" action="https://pay.cryptoqr.net/" method="GET" class="mb-1">
+            <input type="hidden" id="merchantCode" name="merchantCode" value="tokara-deli">
+            <input type="hidden" id="amountCents" name="amountCents" value="">
+            <input type="hidden" id="description" name="orderDescription" value="Tokara Delicatessen">
+            <input type="hidden" id="orderId" name="orderId" value="">
+            <button type="submit" class="paybutton" onclick="setAmountCents(); setOrderId(); return true">Request Crypto Payment</button>
+        </form>
+
+        <!-- Larger MoneyBadger Logo -->
+        <img src="../images/moneybadger.png" class="brandimg" alt="MoneyBadger">
+    </div>
+</body>
+
+</html>
