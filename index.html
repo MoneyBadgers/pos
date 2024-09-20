@@ -89,7 +89,8 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
-        function setMerchantCode() {
+        function init() {
+            document.getElementById('return').value = window.location.href;
             var code = getQueryParam('code');
             if (code) {
                 document.getElementById('merchantCode').value = code;
@@ -99,7 +100,7 @@
             }
         }
         window.onload = function () {
-            setMerchantCode();
+            init();
         }
     </script>
 </head>
@@ -123,11 +124,12 @@
                 <label class="amountcontainer" for="email">Reference (Optional):</label>
                 <input type="text" id="reference" name="reference" onchange="setOrderId()" placeholder="order ref">
             </div>
-            <form id="payform" action="https://pay.cryptoqr.net/" method="GET" class="mb-1">
+            <form id="payform" action="http://localhost:5173/" method="GET" class="mb-1">
                 <input type="hidden" id="merchantCode" name="merchantCode" value="">
                 <input type="hidden" id="amountCents" name="amountCents" value="25000">
                 <input type="hidden" id="description" name="description" value="Donation to Daily Maverick">
                 <input type="hidden" id="orderId" name="orderId" value="">
+                <input type="hidden" id="return" name="return" value="">
                 <button type="submit" class="paybutton" onclick="setAmountCents(); setOrderId(); return true">
                     Pay
                 </button>
