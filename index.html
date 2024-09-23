@@ -90,7 +90,7 @@
             return urlParams.get(param);
         }
         function init() {
-            document.getElementById('return').value = window.location.href;
+            document.getElementById('return').value = encodeURIComponent(window.location.href);
             var code = getQueryParam('code');
             if (code) {
                 document.getElementById('merchantCode').value = code;
