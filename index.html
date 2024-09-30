@@ -89,7 +89,8 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
-        function setMerchantCode() {
+        function init() {
+            document.getElementById('return').value = encodeURIComponent(window.location.href);
             var code = getQueryParam('code');
             if (code) {
                 document.getElementById('merchantCode').value = code;
@@ -99,7 +100,7 @@
             }
         }
         window.onload = function () {
-            setMerchantCode();
+            init();
         }
     </script>
 </head>
@@ -128,6 +129,7 @@
                 <input type="hidden" id="amountCents" name="amountCents" value="25000">
                 <input type="hidden" id="description" name="description" value="Donation to Daily Maverick">
                 <input type="hidden" id="orderId" name="orderId" value="">
+                <input type="hidden" id="return" name="return" value="">
                 <button type="submit" class="paybutton" onclick="setAmountCents(); setOrderId(); return true">
                     Pay
                 </button>
