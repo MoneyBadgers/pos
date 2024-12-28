@@ -76,7 +76,12 @@
     <script>
         function setOrderId() {
             var timestamp = new Date().getTime();
-            var orderId = 'order' + '-' + timestamp;
+            var device = getQueryParam('device');
+            // if deviceId is null or empty, set it to 'order'
+            if (!device) {
+                device = 'order';
+            }
+            var orderId = device + '-' + timestamp;
             document.getElementById('orderId').value = orderId;
         }
         function setAmountCents() {
