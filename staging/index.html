@@ -109,7 +109,7 @@
             </div>
             <div class="mb-1">
                 <label class="amountcontainer" for="amount">Amount (Rands):</label>
-                <input type="number" id="amount" name="amount" onchange="setAmountCents()" placeholder="0" required>
+                <input type=number id="amount" name="amount" placeholder="0" inputmode="decimal" pattern="[0-9]*" onchange="setAmountCents()" required>
                 <label class="amountcontainer" for="email">Reference (Optional):</label>
                 <input type="text" id="reference" name="reference" onchange="setOrderId()" placeholder="order ref">
             </div>
